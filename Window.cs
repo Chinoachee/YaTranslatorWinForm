@@ -1,9 +1,10 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 namespace Translator {
-    public class Window : Form {
+    public partial class Window : Form {
         private const int _windowWidth = 600;
         private const int _windowHeight = 400;
+        
         public Window() {
             InitializationWindow();
         }
@@ -13,5 +14,6 @@ namespace Translator {
             MaximumSize = new Size(Width, Height);
             MinimumSize = new Size(Width, Height);
         }
+        
     }
 }
