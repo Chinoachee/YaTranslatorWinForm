@@ -17,6 +17,9 @@ namespace Translator {
                 _words[sourseWord].Add(targetWord);
             }
         }
+        public List<string> GetSourseWords() {
+            return _words.Keys.ToList();
+        }
         public string GetTargetWord(string sourseWord) {
             return _words[sourseWord].First();
         }

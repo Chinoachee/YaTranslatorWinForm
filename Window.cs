@@ -14,6 +14,7 @@ namespace Translator {
         private ListBox _targetListBox;
 
         Language lang = new Language();
+        Word words = new Word();
 
         public Window() {
             lang.AddSourseLanguage("Русский");
@@ -28,6 +29,11 @@ namespace Translator {
             lang.AddTargetLanguage("Английский","Русский");
             lang.AddTargetLanguage("Английский","Французский");
             lang.AddTargetLanguage("Английский","Японский");
+
+            words.AddSourseWord("Слово");
+            words.AddSourseWord("Ниггер");
+            words.AddTargetWord("Слово","Word");
+            words.AddTargetWord("Ниггер","Nigger");
 
             InitializationWindow();
             InitializationButton();
@@ -45,7 +51,7 @@ namespace Translator {
             _targetButton = CreateButton(_targetButtonWidth,_targetButtonHeight,_targetButtonXPosition,_targetButtonYPosition);
 
             _sourseButton.Click += SourseButton_Clicked;
-
+            _acceptButton.Click += AcceptButton_Clicked;
             _targetButton.Click += TargetButton_Clicked;
 
             Controls.Add(_sourseButton);
@@ -55,6 +61,9 @@ namespace Translator {
         private void InitializationTextBox() {
             _sourseTextBox = CreateTextBox(_sourseTextBoxWidth,_sourseTextBoxHeight,_sourseTextBoxXPosition,_sourseTextBoxYPosition);
             _targetTextBox = CreateTextBox(_targetTextBoxWidth,_targetTextBoxHeight,_targetTextBoxXPosition - 1,_targetTextBoxYPosition);
+
+            _sourseTextBox.TextChanged += SourseTextBox_TextChanged;
+
             Controls.Add(_sourseTextBox);
             Controls.Add(_targetTextBox);
         }
@@ -79,7 +88,7 @@ namespace Translator {
         }
         private void AcceptButton_Clicked(object sender,EventArgs e) {
             if(!string.IsNullOrEmpty(_sourseListBox.Text) && !string.IsNullOrEmpty(_targetButton.Text)) {
-
+                _sourseTextBox.ReadOnly = false;
             }
         }
         private void TargetButton_Clicked(object sender,EventArgs e) {
@@ -104,6 +113,20 @@ namespace Translator {
                 _targetButton.Text = _targetListBox.SelectedItem.ToString();
             }
             _targetListBox.Visible = SwitchListBox(_targetListBox);
+        }
+
+        private void SourseTextBox_TextChanged(object sender, EventArgs e) {
+            foreach(string word in words.GetSourseWords()) {
+                if(_sourseTextBox.Text == word) {
+                    _targetTextBox.Text = words.GetTargetWord(_sourseTextBox.Text);
+                    break;
+                } else {
+                    _targetTextBox.Text = "Добавить новое слово";
+                }
+            }
+            if(string.IsNullOrEmpty(_sourseTextBox.Text)) {
+                _targetTextBox.Text = null;
+            }
         }
 
         private bool SwitchListBox(ListBox listBox) {
