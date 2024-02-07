@@ -64,6 +64,7 @@ namespace Translator {
             _targetListBox = CreateListBox(_targetListBoxWidth - 2,_targetListBoxHeight,_targetListBoxXPosition + 1,_targetListBoxYPosition);
 
             _sourseListBox.Click += SourseListBox_Clicked;
+            _targetListBox.Click += TargetListBox_Clicked;
 
             Controls.Add(_sourseListBox);
             Controls.Add(_targetListBox);
@@ -89,10 +90,16 @@ namespace Translator {
         }
 
         private void SourseListBox_Clicked(object sender,EventArgs e) {
-            if(_sourseListBox.SelectedItems.Count != _sourseListBox.Items.Count) {
+            if(_sourseListBox.SelectedIndex != _sourseListBox.Items.Count - 1) {
                 _sourseButton.Text = _sourseListBox.SelectedItem.ToString();
             }
             _sourseListBox.Visible = SwitchListBox(_sourseListBox);
+        }
+        private void TargetListBox_Clicked(object sender,EventArgs e) {
+            if(_targetListBox.SelectedIndex != _targetListBox.Items.Count - 1) {
+                _targetButton.Text = _targetListBox.SelectedItem.ToString();
+            }
+            _targetListBox.Visible = SwitchListBox(_targetListBox);
         }
 
         private bool SwitchListBox(ListBox listBox) {
