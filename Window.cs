@@ -1,8 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
 using System.Drawing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Windows.Forms;
 namespace Translator {
     public partial class Window : Form {
         private Button _sourseButton;
@@ -30,18 +28,19 @@ namespace Translator {
             lang.AddTargetLanguage("Английский","Русский");
             lang.AddTargetLanguage("Английский","Французский");
             lang.AddTargetLanguage("Английский","Японский");
+
             InitializationWindow();
             InitializationButton();
             InitializationListBox();
             InitializationTextBox();
         }
         private void InitializationWindow() {
-            Size = new Size(_windowWidth, _windowHeight);
-            MaximumSize = new Size(Width, Height);
-            MinimumSize = new Size(Width, Height);
+            Size = new Size(_windowWidth,_windowHeight);
+            MaximumSize = new Size(Width,Height);
+            MinimumSize = new Size(Width,Height);
         }
         private void InitializationButton() {
-            _sourseButton = CreateButton(_sourseButtonWidth, _sourseButtonHeight,_sourseButtonXPosition,_sourseButtonYPosition);
+            _sourseButton = CreateButton(_sourseButtonWidth,_sourseButtonHeight,_sourseButtonXPosition,_sourseButtonYPosition);
             _acceptButton = CreateButton(_acceptButtonWidth,_acceptButtonHeight,_acceptButtonXPosition,_acceptButtonYPosition);
             _targetButton = CreateButton(_targetButtonWidth,_targetButtonHeight,_targetButtonXPosition,_targetButtonYPosition);
 
@@ -54,8 +53,8 @@ namespace Translator {
             Controls.Add(_targetButton);
         }
         private void InitializationTextBox() {
-            _sourseTextBox = CreateTextBox(_sourseTextBoxWidth,_sourseTextBoxHeight,_sourseTextBoxXPosition,_sourseTextBoxYPosition,false);
-            _targetTextBox = CreateTextBox(_targetTextBoxWidth,_targetTextBoxHeight,_targetTextBoxXPosition - 1,_targetTextBoxYPosition,true);
+            _sourseTextBox = CreateTextBox(_sourseTextBoxWidth,_sourseTextBoxHeight,_sourseTextBoxXPosition,_sourseTextBoxYPosition);
+            _targetTextBox = CreateTextBox(_targetTextBoxWidth,_targetTextBoxHeight,_targetTextBoxXPosition - 1,_targetTextBoxYPosition);
             Controls.Add(_sourseTextBox);
             Controls.Add(_targetTextBox);
         }
@@ -70,13 +69,18 @@ namespace Translator {
             Controls.Add(_targetListBox);
         }
 
-        private void SourseButton_Clicked(object sender, EventArgs e) {
+        private void SourseButton_Clicked(object sender,EventArgs e) {
             _sourseListBox.Items.Clear();
             _sourseListBox.Items.AddRange(lang.GetSourseLanguages().ToArray());
             _sourseListBox.Items.Add("Добавить новый язык");
             _sourseListBox.Height = _sourseListBox.Items.Count * 15;
             _sourseListBox.Visible = SwitchListBox(_sourseListBox);
             _targetListBox.Visible = false;
+        }
+        private void AcceptButton_Clicked(object sender,EventArgs e) {
+            if(!string.IsNullOrEmpty(_sourseListBox.Text) && !string.IsNullOrEmpty(_targetButton.Text)) {
+
+            }
         }
         private void TargetButton_Clicked(object sender,EventArgs e) {
             if(!string.IsNullOrEmpty(_sourseButton.Text)) {
@@ -113,14 +117,14 @@ namespace Translator {
                 Visible = true,
             };
         }
-        private TextBox CreateTextBox(int width,int height,int Xposition,int Yposition,bool readOnly) {
+        private TextBox CreateTextBox(int width,int height,int Xposition,int Yposition) {
             return new TextBox() {
                 Width = width,
                 Height = height,
-                Location = new Point(Xposition,Yposition), 
+                Location = new Point(Xposition,Yposition),
                 Visible = true,
                 Multiline = true,
-                ReadOnly = readOnly,
+                ReadOnly = true,
             };
         }
         private ListBox CreateListBox(int width,int height,int Xposition,int Yposition) {
