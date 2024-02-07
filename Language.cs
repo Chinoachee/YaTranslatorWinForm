@@ -9,7 +9,16 @@ namespace Translator {
         public Language() {
             _languages = new Dictionary<string,HashSet<string>>();
         }
-
+        public void AddSourseLanguage(string sourselanguage) {
+            if(!string.IsNullOrEmpty(sourselanguage) && !_languages.ContainsKey(sourselanguage)) {
+                _languages.Add(sourselanguage, new HashSet<string>());
+            }
+        }
+        public void AddTargetLanguage(string sourseLanguage,string targetLanguage) {
+            if(!string.IsNullOrEmpty(sourseLanguage)) {
+                _languages[sourseLanguage].Add(targetLanguage);
+            }
+        }
         public List<string> GetSourseLanguages() {
             return _languages.Keys.ToList();
         }
