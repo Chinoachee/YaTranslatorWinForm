@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
+using System;
 namespace Translator {
     public partial class Window : Form {
         private Button _sourseButton;
@@ -11,6 +12,8 @@ namespace Translator {
 
         private ListBox _sourseListBox;
         private ListBox _targetListBox;
+
+
         public Window() {
             InitializationWindow();
             InitializationButton();
@@ -42,6 +45,7 @@ namespace Translator {
             Controls.Add(_sourseListBox);
             Controls.Add(_targetListBox);
         }
+
         private Button CreateButton(int width,int height,int Xposition,int Yposition) {
             return new Button() {
                 Width = width,
