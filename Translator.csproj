@@ -51,6 +51,9 @@
     <Compile Include="Window.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WindowPoles.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
