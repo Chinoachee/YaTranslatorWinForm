@@ -2,7 +2,7 @@
 
 namespace Translator {
     public partial class Window : Form {
-        private const int _windowWidth = 600;
+        private const int _windowWidth = 615;
         private const int _windowHeight = 400;
 
         private const int _sourseButtonWidth = 250;

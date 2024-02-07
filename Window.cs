@@ -14,15 +14,6 @@ namespace Translator {
             MaximumSize = new Size(Width, Height);
             MinimumSize = new Size(Width, Height);
         }
-        private Button CreateButton(int width,int height,int Xposition, int Yposition) {
-            return new Button() {
-                Width = width,
-                Height = height,
-                Location = new Point(Xposition, Yposition),
-                Visible = true,
-            };
-        }
-
         private void InitializationButton() {
             _sourseButton = CreateButton(_sourseButtonWidth, _sourseButtonHeight,_sourseButtonXPosition,_sourseButtonYPosition);
             _acceptButton = CreateButton(_acceptButtonWidth,_acceptButtonHeight,_acceptButtonXPosition,_acceptButtonYPosition);
@@ -30,6 +21,15 @@ namespace Translator {
             Controls.Add(_sourseButton);
             Controls.Add(_acceptButton);
             Controls.Add(_targetButton);
+        }
+
+        private Button CreateButton(int width,int height,int Xposition,int Yposition) {
+            return new Button() {
+                Width = width,
+                Height = height,
+                Location = new Point(Xposition,Yposition),
+                Visible = true,
+            };
         }
     }
 }
