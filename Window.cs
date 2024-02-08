@@ -86,9 +86,10 @@ namespace Translator {
             _targetListBox.Visible = false;
         }
         private void AcceptButton_Clicked(object sender,EventArgs e) {
-            words.LoadWords(_sourseButton.Text + _targetButton.Text);
             if(!string.IsNullOrEmpty(_sourseListBox.Text) && !string.IsNullOrEmpty(_targetButton.Text)) {
+                words.LoadWords(_sourseButton.Text + _targetButton.Text);
                 _sourseTextBox.ReadOnly = false;
+
             }
         }
         private void SaveLanguageButton_Clicked(object sender,EventArgs e) {
@@ -96,19 +97,17 @@ namespace Translator {
                 if(!string.IsNullOrEmpty(_sourseLanguageTextBox.Text)) {
                     lang.AddSourseLanguage(_sourseLanguageTextBox.Text);
                     _sourseLanguageTextBox.Text = null;
-                    _sourseLanguageTextBox.Visible = false;
-                    _saveLanguagesButton.Visible = false;
-                    _acceptButton.Visible = true;
+                    _sourseLanguageTextBox.Visible = false;   
                 }
             } else {
                 if(!string.IsNullOrEmpty(_targetLanguageTextBox.Text)) {
                     lang.AddTargetLanguage(_sourseButton.Text,_targetLanguageTextBox.Text);
                     _targetLanguageTextBox.Text = null;
                     _targetLanguageTextBox.Visible = false;
-                    _saveLanguagesButton.Visible = false;
-                    _acceptButton.Visible = true;
                 }
             }
+            _saveLanguagesButton.Visible = false;
+            _acceptButton.Visible = true;
             lang.SaveLanguages("languages");
         }
         private void TargetButton_Clicked(object sender,EventArgs e) {
@@ -164,17 +163,14 @@ namespace Translator {
         }
 
         private void SourseTextBox_TextChanged(object sender, EventArgs e) {
+            _targetTextBox.Text = "Добавить новое слово";
             foreach(string word in words.GetSourseWords()) {
                 if(_sourseTextBox.Text == word) {
                     _targetTextBox.Text = words.GetTargetWord(_sourseTextBox.Text);
                     break;
-                } else {
-                    _targetTextBox.Text = "Добавить новое слово";
                 }
             }
-            if(string.IsNullOrEmpty(_sourseTextBox.Text)) {
-                _targetTextBox.Text = null;
-            }
+            if(string.IsNullOrEmpty(_sourseTextBox.Text)) _targetTextBox.Text = null;
         }
 
         private bool SwitchListBox(ListBox listBox) {
@@ -211,6 +207,6 @@ namespace Translator {
 //Добавить реализацию при смене sourselanguage убирать из targetlanguage язык //complete
 //Добавить реализацию при смене языка запрета на запись слово в soruseTextBox //complete
 //Добавить реализацию загрузку из файла при нажатии на acceptButton //complete
-//Добавить реализацию добавления языков sourse/target 
+//Добавить реализацию добавления языков sourse/target  //complete
 //Добавить реализацию добавления слов sourse/target
-//Добавить реализацию сохранения файлов/загрузки файлов
+//Добавить реализацию сохранения файлов/загрузки файлов //complete 50/50
