@@ -54,6 +54,8 @@ namespace Translator {
             _acceptButton.Click += AcceptButton_Clicked;
             _targetButton.Click += TargetButton_Clicked;
 
+            _sourseButton.TextChanged += SourseButton_TextChanged;
+
             Controls.Add(_sourseButton);
             Controls.Add(_acceptButton);
             Controls.Add(_targetButton);
@@ -100,6 +102,12 @@ namespace Translator {
                 _targetListBox.Visible = SwitchListBox(_targetListBox);
                 _sourseListBox.Visible = false;
             }
+        }
+
+        private void SourseButton_TextChanged(object sender,EventArgs e) {
+            _targetButton.Text = null;
+            _sourseTextBox.Text = null;
+            _sourseTextBox.ReadOnly = true;
         }
 
         private void SourseListBox_Clicked(object sender,EventArgs e) {
@@ -160,8 +168,8 @@ namespace Translator {
         }
     }
 }
-//Добавить реализацию при смене sourselanguage убирать из targetlanguage язык
-//Добавить реализацию при смене языка запрета на запись слово в soruseTextBox
+//Добавить реализацию при смене sourselanguage убирать из targetlanguage язык //complete
+//Добавить реализацию при смене языка запрета на запись слово в soruseTextBox //complete
 //Добавить реализацию загрузку из файла при нажатии на acceptButton
 //Добавить реализацию добавления языков sourse/target
 //Добавить реализацию добавления слов sourse/target
