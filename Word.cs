@@ -25,11 +25,11 @@ namespace Translator {
         public string GetTargetWord(string sourseWord) {
             return _words[sourseWord].First();
         }
-        public void SaveLanguages(string path) {
+        public void SaveWords(string path) {
             string Json = JsonSerializer.Serialize(_words);
             File.WriteAllText(path,Json);
         }
-        public void LoadLanguages(string path) {
+        public void LoadWords(string path) {
             if(File.Exists(path)) {
                 string Json = File.ReadAllText(path);
                 _words = JsonSerializer.Deserialize<Dictionary<string,HashSet<string>>>(Json);

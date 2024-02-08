@@ -89,6 +89,7 @@ namespace Translator {
             _targetListBox.Visible = false;
         }
         private void AcceptButton_Clicked(object sender,EventArgs e) {
+
             if(!string.IsNullOrEmpty(_sourseListBox.Text) && !string.IsNullOrEmpty(_targetButton.Text)) {
                 _sourseTextBox.ReadOnly = false;
             }
