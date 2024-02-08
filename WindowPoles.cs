@@ -15,6 +15,11 @@ namespace Translator {
         private const int _acceptButtonXPosition = 280;
         private const int _acceptButtonYPosition = 15;
 
+        private const int _saveLanguageButtonWidth = 40;
+        private const int _saveLanguageButtonHeight = 40;
+        private const int _saveLanguageButtonXPosition = 280;
+        private const int _saveLanguageButtonYPosition = 15;
+
         private const int _targetButtonWidth = 250;
         private const int _targetButtonHeight = 40;
         private const int _targetButtonXPosition = 335;
@@ -29,6 +34,16 @@ namespace Translator {
         private const int _targetTextBoxHeight = 200;
         private const int _targetTextBoxXPosition = 300;
         private const int _targetTextBoxYPosition = 70;
+
+        private const int _sourseLanguageTextBoxWidth = 150;
+        private const int _sourseLanguageTextBoxHeight = 20;
+        private const int _sourseLanguageTextBoxXPosition = 65;
+        private const int _sourseLanguageTextBoxYPosition = 25;
+
+        private const int _targetLanguageTextBoxWidth = 150;
+        private const int _targetLanguageTextBoxHeight = 20;
+        private const int _targetLanguageTextBoxXPosition = 385;
+        private const int _targetLanguageTextBoxYPosition = 25;
 
         private const int _sourseListBoxWidth = 250;
         private const int _sourseListBoxHeight = 100;

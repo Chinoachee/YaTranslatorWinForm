@@ -5,10 +5,14 @@ namespace Translator {
     public partial class Window : Form {
         private Button _sourseButton;
         private Button _acceptButton;
+        private Button _saveLanguagesButton;
         private Button _targetButton;
 
         private TextBox _sourseTextBox;
         private TextBox _targetTextBox;
+
+        private TextBox _sourseLanguageTextBox;
+        private TextBox _targetLanguageTextBox;
 
         private ListBox _sourseListBox;
         private ListBox _targetListBox;
@@ -19,10 +23,12 @@ namespace Translator {
         public Window() {
             lang.LoadLanguages("languages");
 
-            InitializationWindow();
-            InitializationButton();
             InitializationListBox();
             InitializationTextBox();
+            InitializationWindow();
+            InitializationButton();
+            
+            
         }
         private void InitializationWindow() {
             Size = new Size(_windowWidth,_windowHeight);
@@ -30,28 +36,38 @@ namespace Translator {
             MinimumSize = new Size(Width,Height);
         }
         private void InitializationButton() {
-            _sourseButton = CreateButton(_sourseButtonWidth,_sourseButtonHeight,_sourseButtonXPosition,_sourseButtonYPosition);
-            _acceptButton = CreateButton(_acceptButtonWidth,_acceptButtonHeight,_acceptButtonXPosition,_acceptButtonYPosition);
-            _targetButton = CreateButton(_targetButtonWidth,_targetButtonHeight,_targetButtonXPosition,_targetButtonYPosition);
+            _sourseButton = CreateButton(_sourseButtonWidth,_sourseButtonHeight,_sourseButtonXPosition,_sourseButtonYPosition,true);
+            _acceptButton = CreateButton(_acceptButtonWidth,_acceptButtonHeight,_acceptButtonXPosition,_acceptButtonYPosition,true);
+            _saveLanguagesButton = CreateButton(_saveLanguageButtonWidth,_saveLanguageButtonHeight,_saveLanguageButtonXPosition,_saveLanguageButtonYPosition,false);
+            _targetButton = CreateButton(_targetButtonWidth,_targetButtonHeight,_targetButtonXPosition,_targetButtonYPosition,true);
 
             _sourseButton.Click += SourseButton_Clicked;
             _acceptButton.Click += AcceptButton_Clicked;
+            _saveLanguagesButton.Click += SaveLanguageButton_Clicked;
             _targetButton.Click += TargetButton_Clicked;
 
             _sourseButton.TextChanged += SourseButton_TextChanged;
 
             Controls.Add(_sourseButton);
             Controls.Add(_acceptButton);
+            Controls.Add(_saveLanguagesButton);
             Controls.Add(_targetButton);
         }
         private void InitializationTextBox() {
-            _sourseTextBox = CreateTextBox(_sourseTextBoxWidth,_sourseTextBoxHeight,_sourseTextBoxXPosition,_sourseTextBoxYPosition);
-            _targetTextBox = CreateTextBox(_targetTextBoxWidth,_targetTextBoxHeight,_targetTextBoxXPosition - 1,_targetTextBoxYPosition);
+            _sourseTextBox = CreateTextBox(_sourseTextBoxWidth,_sourseTextBoxHeight,_sourseTextBoxXPosition,_sourseTextBoxYPosition,true,true,true);
+            _targetTextBox = CreateTextBox(_targetTextBoxWidth,_targetTextBoxHeight,_targetTextBoxXPosition - 1,_targetTextBoxYPosition,true,true,true);
+            _sourseLanguageTextBox = CreateTextBox(_sourseLanguageTextBoxWidth,_sourseLanguageTextBoxHeight
+                ,_sourseLanguageTextBoxXPosition,_sourseLanguageTextBoxYPosition,false,false,false);
+            _targetLanguageTextBox = CreateTextBox(_targetLanguageTextBoxWidth,_targetLanguageTextBoxHeight
+                ,_targetLanguageTextBoxXPosition,_targetLanguageTextBoxYPosition,false,false,false);
 
             _sourseTextBox.TextChanged += SourseTextBox_TextChanged;
 
             Controls.Add(_sourseTextBox);
             Controls.Add(_targetTextBox);
+
+            Controls.Add(_sourseLanguageTextBox);
+            Controls.Add(_targetLanguageTextBox);
         }
         private void InitializationListBox() {
             _sourseListBox = CreateListBox(_sourseListBoxWidth - 2,_sourseListBoxHeight,_sourseListBoxXPosition + 1,_sourseListBoxYPosition);
@@ -78,6 +94,16 @@ namespace Translator {
                 _sourseTextBox.ReadOnly = false;
             }
         }
+        private void SaveLanguageButton_Clicked(object sender,EventArgs e) {
+            if(!string.IsNullOrEmpty(_sourseLanguageTextBox.Text)) {
+                lang.AddSourseLanguage(_sourseLanguageTextBox.Text);
+                _sourseLanguageTextBox.Text = null;
+                _sourseLanguageTextBox.Visible = false;
+                _saveLanguagesButton.Visible = false;
+                _acceptButton.Visible = true;
+                lang.SaveLanguages("languages");
+            }
+        }
         private void TargetButton_Clicked(object sender,EventArgs e) {
             if(!string.IsNullOrEmpty(_sourseButton.Text)) {
                 _targetListBox.Items.Clear();
@@ -98,6 +124,17 @@ namespace Translator {
         private void SourseListBox_Clicked(object sender,EventArgs e) {
             if(_sourseListBox.SelectedIndex != _sourseListBox.Items.Count - 1) {
                 _sourseButton.Text = _sourseListBox.SelectedItem.ToString();
+                if(!_acceptButton.Visible) {
+                    _acceptButton.Visible = true;
+                    _saveLanguagesButton.Visible = false;
+                }
+                _sourseLanguageTextBox.Text = null;
+                _sourseLanguageTextBox.Visible = false;
+            } else {
+                _sourseButton.Text = null;
+                _acceptButton.Visible = false;
+                _saveLanguagesButton.Visible = true;
+                _sourseLanguageTextBox.Visible = true;
             }
             _sourseListBox.Visible = SwitchListBox(_sourseListBox);
         }
@@ -125,22 +162,22 @@ namespace Translator {
         private bool SwitchListBox(ListBox listBox) {
             return !listBox.Visible;
         }
-        private Button CreateButton(int width,int height,int Xposition,int Yposition) {
+        private Button CreateButton(int width,int height,int Xposition,int Yposition,bool isVisible) {
             return new Button() {
                 Width = width,
                 Height = height,
                 Location = new Point(Xposition,Yposition),
-                Visible = true,
+                Visible = isVisible,
             };
         }
-        private TextBox CreateTextBox(int width,int height,int Xposition,int Yposition) {
+        private TextBox CreateTextBox(int width,int height,int Xposition,int Yposition,bool isVisible,bool isMultiLine,bool isReadOnly) {
             return new TextBox() {
                 Width = width,
                 Height = height,
                 Location = new Point(Xposition,Yposition),
-                Visible = true,
-                Multiline = true,
-                ReadOnly = true,
+                Visible = isVisible,
+                Multiline = isMultiLine,
+                ReadOnly = isReadOnly,
             };
         }
         private ListBox CreateListBox(int width,int height,int Xposition,int Yposition) {
