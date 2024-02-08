@@ -17,23 +17,7 @@ namespace Translator {
         Word words = new Word();
 
         public Window() {
-            lang.AddSourseLanguage("Русский");
-            lang.AddSourseLanguage("Английский");
-            lang.AddSourseLanguage("Французский");
-            lang.AddSourseLanguage("Японский");
-
-            lang.AddTargetLanguage("Русский","Английский");
-            lang.AddTargetLanguage("Русский","Французский");
-            lang.AddTargetLanguage("Русский","Японский");
-
-            lang.AddTargetLanguage("Английский","Русский");
-            lang.AddTargetLanguage("Английский","Французский");
-            lang.AddTargetLanguage("Английский","Японский");
-
-            words.AddSourseWord("Слово");
-            words.AddSourseWord("Ниггер");
-            words.AddTargetWord("Слово","Word");
-            words.AddTargetWord("Ниггер","Nigger");
+            lang.LoadLanguages("languages");
 
             InitializationWindow();
             InitializationButton();
@@ -89,7 +73,7 @@ namespace Translator {
             _targetListBox.Visible = false;
         }
         private void AcceptButton_Clicked(object sender,EventArgs e) {
-
+            words.LoadWords(_sourseButton.Text + _targetButton.Text);
             if(!string.IsNullOrEmpty(_sourseListBox.Text) && !string.IsNullOrEmpty(_targetButton.Text)) {
                 _sourseTextBox.ReadOnly = false;
             }
@@ -171,7 +155,7 @@ namespace Translator {
 }
 //Добавить реализацию при смене sourselanguage убирать из targetlanguage язык //complete
 //Добавить реализацию при смене языка запрета на запись слово в soruseTextBox //complete
-//Добавить реализацию загрузку из файла при нажатии на acceptButton
+//Добавить реализацию загрузку из файла при нажатии на acceptButton //complete 50/50
 //Добавить реализацию добавления языков sourse/target
 //Добавить реализацию добавления слов sourse/target
 //Добавить реализацию сохранения файлов/загрузки файлов
