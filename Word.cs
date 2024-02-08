@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 
 namespace Translator {
     public class Word {
@@ -22,6 +24,16 @@ namespace Translator {
         }
         public string GetTargetWord(string sourseWord) {
             return _words[sourseWord].First();
+        }
+        public void SaveLanguages(string path) {
+            string Json = JsonSerializer.Serialize(_words);
+            File.WriteAllText(path,Json);
+        }
+        public void LoadLanguages(string path) {
+            if(File.Exists(path)) {
+                string Json = File.ReadAllText(path);
+                _words = JsonSerializer.Deserialize<Dictionary<string,HashSet<string>>>(Json);
+            }
         }
     }
 }
