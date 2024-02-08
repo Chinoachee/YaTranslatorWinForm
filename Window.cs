@@ -22,13 +22,10 @@ namespace Translator {
 
         public Window() {
             lang.LoadLanguages("languages");
-
             InitializationListBox();
             InitializationTextBox();
             InitializationWindow();
             InitializationButton();
-            
-            
         }
         private void InitializationWindow() {
             Size = new Size(_windowWidth,_windowHeight);
@@ -95,14 +92,24 @@ namespace Translator {
             }
         }
         private void SaveLanguageButton_Clicked(object sender,EventArgs e) {
-            if(!string.IsNullOrEmpty(_sourseLanguageTextBox.Text)) {
-                lang.AddSourseLanguage(_sourseLanguageTextBox.Text);
-                _sourseLanguageTextBox.Text = null;
-                _sourseLanguageTextBox.Visible = false;
-                _saveLanguagesButton.Visible = false;
-                _acceptButton.Visible = true;
-                lang.SaveLanguages("languages");
+            if(string.IsNullOrEmpty(_sourseButton.Text)) {
+                if(!string.IsNullOrEmpty(_sourseLanguageTextBox.Text)) {
+                    lang.AddSourseLanguage(_sourseLanguageTextBox.Text);
+                    _sourseLanguageTextBox.Text = null;
+                    _sourseLanguageTextBox.Visible = false;
+                    _saveLanguagesButton.Visible = false;
+                    _acceptButton.Visible = true;
+                }
+            } else {
+                if(!string.IsNullOrEmpty(_targetLanguageTextBox.Text)) {
+                    lang.AddTargetLanguage(_sourseButton.Text,_targetLanguageTextBox.Text);
+                    _targetLanguageTextBox.Text = null;
+                    _targetLanguageTextBox.Visible = false;
+                    _saveLanguagesButton.Visible = false;
+                    _acceptButton.Visible = true;
+                }
             }
+            lang.SaveLanguages("languages");
         }
         private void TargetButton_Clicked(object sender,EventArgs e) {
             if(!string.IsNullOrEmpty(_sourseButton.Text)) {
@@ -141,6 +148,17 @@ namespace Translator {
         private void TargetListBox_Clicked(object sender,EventArgs e) {
             if(_targetListBox.SelectedIndex != _targetListBox.Items.Count - 1) {
                 _targetButton.Text = _targetListBox.SelectedItem.ToString();
+                if(!_acceptButton.Visible) {
+                    _acceptButton.Visible = true;
+                    _saveLanguagesButton.Visible = false;
+                }
+                _targetLanguageTextBox.Text = null;
+                _targetLanguageTextBox.Visible = false;
+            } else {
+                _targetButton.Text = null;
+                _acceptButton.Visible = false;
+                _saveLanguagesButton.Visible = true;
+                _targetLanguageTextBox.Visible = true;
             }
             _targetListBox.Visible = SwitchListBox(_targetListBox);
         }
@@ -192,7 +210,7 @@ namespace Translator {
 }
 //Добавить реализацию при смене sourselanguage убирать из targetlanguage язык //complete
 //Добавить реализацию при смене языка запрета на запись слово в soruseTextBox //complete
-//Добавить реализацию загрузку из файла при нажатии на acceptButton //complete 50/50
-//Добавить реализацию добавления языков sourse/target
+//Добавить реализацию загрузку из файла при нажатии на acceptButton //complete
+//Добавить реализацию добавления языков sourse/target 
 //Добавить реализацию добавления слов sourse/target
 //Добавить реализацию сохранения файлов/загрузки файлов
