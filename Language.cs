@@ -11,7 +11,7 @@ namespace Translator {
         }
         public void AddSourseLanguage(string sourselanguage) {
             if(!string.IsNullOrEmpty(sourselanguage) && !_languages.ContainsKey(sourselanguage)) {
-                _languages.Add(sourselanguage, new HashSet<string>());
+                _languages.Add(sourselanguage,new HashSet<string>());
             }
         }
         public void AddTargetLanguage(string sourseLanguage,string targetLanguage) {
@@ -30,8 +30,10 @@ namespace Translator {
             File.WriteAllText(path,Json);
         }
         public void LoadLanguages(string path) {
-            string Json = File.ReadAllText(path);
-            _languages = JsonSerializer.Deserialize<Dictionary<string,HashSet<string>>>(Json);
+            if(File.Exists(path)) {
+                string Json = File.ReadAllText(path);
+                _languages = JsonSerializer.Deserialize<Dictionary<string,HashSet<string>>>(Json);
+            }
         }
     }
 }
